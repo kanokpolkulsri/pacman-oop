@@ -12,14 +12,18 @@ public class Pacman {
     public static final int SPEED = 10;
     private static final int [][] DIR_OFFSETS = new int [][] {
         {0,0},
-        {0,1},
-        {1,0},
         {0,-1},
+        {1,0},
+        {0,1},
         {-1,0}
     };
+    private int currentDirection;
+    private int nextDirection;
     
     public Pacman(int x, int y) {
         position = new Vector2(x,y);
+        currentDirection = DIRECTION_STILL;
+        nextDirection = DIRECTION_STILL;
     }    
  
     public Vector2 getPosition() {

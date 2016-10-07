@@ -13,6 +13,7 @@ public class WorldRenderer extends ScreenAdapter {
     private Pacman pacman;
     private SpriteBatch batch;
     private MazeRenderer mazeRenderer;
+    public static final int BLOCK_SIZE = 40;
     
 	public WorldRenderer(PacmanGame pacmanGame, World world) {
         this.pacmanGame = pacmanGame;
@@ -24,12 +25,13 @@ public class WorldRenderer extends ScreenAdapter {
 	
 	@Override
 	public void render(float delta) {
-		mazeRenderer.render();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Vector2 pos = pacman.getPosition();
+        mazeRenderer.render();
         batch.begin();
-        batch.draw(pacmanImg, pos.x, pos.y);
+        batch.draw(pacmanImg, pos.x - 20, PacmanGame.HEIGHT - pos.y - 20);
+        batch.draw(pacmanImg, pos.x - BLOCK_SIZE/2, PacmanGame.HEIGHT - pos.y - BLOCK_SIZE/2);
         batch.end();
     }
 }

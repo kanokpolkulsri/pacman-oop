@@ -1,16 +1,15 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MazeRenderer extends ScreenAdapter {
+public class MazeRenderer{
 	 
     private Maze maze;
     private SpriteBatch batch;
     private Texture wallImage;
     private Texture dotImage;
- 
+    
     public MazeRenderer(SpriteBatch batch, Maze maze) {
         this.maze = maze;
         this.batch = batch;
@@ -22,8 +21,8 @@ public class MazeRenderer extends ScreenAdapter {
         batch.begin();
         for(int r = 0; r < maze.getHeight(); r++) {
             for(int c = 0; c < maze.getWidth(); c++) {
-                int x = c * 40;
-                int y = PacmanGame.HEIGHT - (r * 40) - 40;
+            	int x = c * WorldRenderer.BLOCK_SIZE;
+                int y = PacmanGame.HEIGHT - (r * WorldRenderer.BLOCK_SIZE) - WorldRenderer.BLOCK_SIZE;
  
                 if(maze.hasWallAt(r, c)) {
                     batch.draw(wallImage, x, y);

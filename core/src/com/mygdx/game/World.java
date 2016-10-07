@@ -4,7 +4,7 @@ public class World {
     private Pacman pacman;
     private Maze maze;
     World(PacmanGame pacmanGame) {
-        pacman = new Pacman(100,100);
+    	pacman = new Pacman(60,60);
         maze = new Maze();
     }
  

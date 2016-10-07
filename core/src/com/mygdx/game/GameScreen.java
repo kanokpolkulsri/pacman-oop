@@ -23,6 +23,7 @@ public class GameScreen extends ScreenAdapter {
     }
     
     private void update(float delta) {
+    	
     	if(Gdx.input.isKeyPressed(Keys.UP)) {
     		pacman.move(Pacman.DIRECTION_UP);
         }
@@ -36,6 +37,5 @@ public class GameScreen extends ScreenAdapter {
             pacman.move(Pacman.DIRECTION_DOWN);
         }
     }
-    
 
 }
