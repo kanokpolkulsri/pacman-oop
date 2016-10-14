@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.LinkedList;
+import java.util.List;
 import com.badlogic.gdx.math.Vector2;
 
 public class Pacman {
@@ -19,13 +21,17 @@ public class Pacman {
     };
     private int currentDirection;
     private int nextDirection;
-    private Maze maze;
+    //private Maze maze;
+    private World world;
+    private List<DotEattenListener> listeners;
     
-    public Pacman(int x, int y, Maze maze) {
+    public Pacman(int x, int y, World world) {
         position = new Vector2(x,y);
         currentDirection = DIRECTION_STILL;
         nextDirection = DIRECTION_STILL;
-        this.maze = maze;
+        //this.maze = maze;
+        this.world = world;
+        listeners = new LinkedList<DotEattenListener>();
     }    
     
     public void setNextDirection(int dir) {
@@ -42,6 +48,7 @@ public class Pacman {
     }
     
     public void update() {
+    	Maze maze = world.getMaze();
         if(isAtCenter()) {
             if(canMoveInDirection(nextDirection))
             {
@@ -54,6 +61,8 @@ public class Pacman {
             if(maze.hasDotAt(getRow(),getColumn()))
             {
             	maze.removeDotAt(getRow(), getColumn());
+            	//world.increaseScore();
+            	notifyDotEattenListeners();
             }
             
         }
@@ -68,6 +77,7 @@ public class Pacman {
     }
     
     private boolean canMoveInDirection(int dir) {
+    	Maze maze = world.getMaze();
         int newRow = (int)getRow() + DIR_OFFSETS[nextDirection][1];
         int newCol = (int)getColumn() + DIR_OFFSETS[nextDirection][0];
         if(maze.hasWallAt(newRow, newCol)){
@@ -84,4 +94,17 @@ public class Pacman {
         return ((int)position.x) / WorldRenderer.BLOCK_SIZE; 
     }
     
+    public interface DotEattenListener {
+        void notifyDotEatten();			
+    }
+    
+    public void registerDotEattenListener(DotEattenListener l) {
+        listeners.add(l);
+    }
+ 
+    private void notifyDotEattenListeners() {
+        for(DotEattenListener l : listeners) {
+            l.notifyDotEatten();
+        }
+    }
 }
